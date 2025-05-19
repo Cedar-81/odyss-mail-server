@@ -6,6 +6,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+require("dotenv").config();
+
 app.post("/api/send-email", async (req, res) => {
   const { email, message } = req.body;
 
@@ -15,12 +17,12 @@ app.post("/api/send-email", async (req, res) => {
 
   try {
     const transporter = nodemailer.createTransport({
-      host: "sbg106.truehost.cloud", // e.g. mail.truehost.cloud
-      port: 465,
-      secure: true, // true for 465, false for 587
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      secure: false, // use true for 465, false for 587
       auth: {
-        user: "odyss.travels@odyss.ng", // your Truehost email
-        pass: "*FVNjpHzrG?#", // your Truehost password
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
     });
 
