@@ -15,11 +15,17 @@ app.post("/api/send-email", async (req, res) => {
     return res.status(400).json({ error: "Missing fields" });
   }
 
+  console.log(
+    process.env.SMTP_HOST,
+    process.env.SMTP_PORT,
+    process.env.SMTP_USER,
+    process.env.SMTP_PASS
+  );
   try {
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
-      secure: false, // use true for 465, false for 587
+      secure: true,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
